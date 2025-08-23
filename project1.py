@@ -5,17 +5,17 @@ import plotly.graph_objects as go
 from datetime import datetime
 import numpy as np
 
-# Set page configuration
+
 st.set_page_config(
     page_title="Cybersecurity Attacks Dashboard",
     page_icon="🛡",
     layout="wide",
     initial_sidebar_state="expanded"
 )
-# Sample dataset (replace this with your actual data loading from the Google Drive link)
-@st.cache_data
+# Create sample data for demonstration
+
 def load_sample_data():
-    # Create sample data for demonstration
+    
     years = list(range(2015, 2025))
     attack_types = [
         'Phishing', 'Ransomware', 'DDoS', 'Malware', 
@@ -38,16 +38,16 @@ def load_sample_data():
     
     return pd.DataFrame(data)
 
-# Load data
+
 df = load_sample_data()
 
-# Convert date column to datetime
+
 df['date'] = pd.to_datetime(df['date'])
 
 # Sidebar filters
 st.sidebar.header("🔍 Filter Options")
 
-# Year range filter
+# Year range
 year_range = st.sidebar.slider(
     "Select Year Range:",
     min_value=int(df['year'].min()),
@@ -55,21 +55,20 @@ year_range = st.sidebar.slider(
     value=(int(df['year'].min()), int(df['year'].max()))
 )
 
-# Attack type filter
+# Attack type 
 attack_types = st.sidebar.multiselect(
     "Select Attack Types:",
     options=df['attack_type'].unique(),
     default=df['attack_type'].unique()
 )
 
-# Severity filter
+# level of attack range
 severity_levels = st.sidebar.multiselect(
     "Select Severity Levels:",
     options=df['severity'].unique(),
     default=df['severity'].unique()
 )
 
-# Apply filters
 filtered_df = df[
     (df['year'] >= year_range[0]) & 
     (df['year'] <= year_range[1]) &
@@ -81,8 +80,7 @@ filtered_df = df[
 st.title("🛡 Cybersecurity Attacks Dashboard")
 st.text("Welcome to  the world of Information on Cybersecurity technology.As, we all know , as the Technology increases rapidly ,there is tremendous use of networks all over the world. This information is related to cybersecurity attacks which happened in last few years i.e from 2015-2024.It helps to identify and analyze the attacks like phishing, malware, man in the middle etc. with help of their introduction and some visualisations.This report is mainly used to gather information for awareness among people and help governments and other campaign awareness people to know about which country suffers a lot and how their income and gdp rates decreases due to these kinds of cybersecurity attacks to promote awareness and by making policies for welfare of society.")
 st.markdown("### Comprehensive analysis of cybersecurity incidents over time")
-
-# Key metrics
+#col creation
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
@@ -101,7 +99,7 @@ with col4:
     total_loss = filtered_df['financial_loss'].sum()
     st.metric("Total Financial Loss", f"${total_loss:,}")
 
-# Tab layout for different visualizations
+# Tab layout 
 tab1, tab2, tab3, tab4 = st.tabs([
     "📈 Overview", "🔍 Attack Details", "📊 Sector Analysis", "📅 Timeline"
 ])
@@ -147,8 +145,6 @@ with tab1:
 
 with tab2:
     st.header("Detailed Attack Analysis")
-    
-    # Select specific attack type for detailed analysis
     selected_attack = st.selectbox(
         "Select Attack Type for Detailed Analysis:",
         options=filtered_df['attack_type'].unique()
@@ -274,5 +270,5 @@ with tab4:
 
 
 
-# Footer
+
 st.markdown("---")
